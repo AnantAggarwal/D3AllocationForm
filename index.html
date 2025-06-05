@@ -209,7 +209,7 @@
                     for (let i = 0; i < 27; i++) {
                         document.write(`
                             <div class="checkbox-item">
-                                <input type="checkbox" id="${names[i]}" name="${names[i]}" value="${names[i]}">
+                                <input type="checkbox" id="option${i}" name="${names[i]}" value="option${i}">
                                 <label for="option${i}">${names[i]}</label>
                             </div>
                         `);
@@ -302,11 +302,10 @@
                 const rollNumber = rollNumberInput.value.trim();
 
                 try {
-
                     let rolls = ["240118", "240134", "240168", "240179", "240183", "240189", "240245", "240270", "240340", "240452", "240492", "240690", "240700", "240743", "240771", "240812", "240831", "240835", "240840", "240877", "240883", "240907", "240975", "240991", "241008", "241045", "241061"]
-                    if(!(rolls.includes(rollNumber)){
-                        console.log("Test");
-                        errorMessage.textContent = `Not eligible`;
+                    if(!(rolls.includes(rollNumber))){
+                        console.log(typeof rollNumber);
+                        errorMessage.textContent = `Roll Number "${rollNumber}" has already submit.`;
                         errorMessage.style.display = 'block';
                         return;
                     }
