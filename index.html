@@ -241,8 +241,6 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        let rolls = ["240118", "240134", "240168", "240179", "240183", "240189", "240245", "240270", "240340", "240452", "240492", "240690", "240700", "240743", "240771", "240812", "240831", "240835", "240840", "240877", "240883", "240907", "240975", "240991", "241008", "241045", "241061"]
-
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('checkboxForm');
             const checkboxes = form.querySelectorAll('input[type="checkbox"]');
@@ -305,10 +303,12 @@
 
                 try {
 
-                    if (rollNumber in rolls){
-                        errorMessage.textContent = `You are not eligible to vote!`;
+                    let rolls = ["240118", "240134", "240168", "240179", "240183", "240189", "240245", "240270", "240340", "240452", "240492", "240690", "240700", "240743", "240771", "240812", "240831", "240835", "240840", "240877", "240883", "240907", "240975", "240991", "241008", "241045", "241061"]
+                    if(!(rollNumber in rolls)){
+                        console.log("Test");
+                        errorMessage.textContent = `Not eligible`;
                         errorMessage.style.display = 'block';
-                        return; // Stop submission
+                        return;
                     }
                     // --- STEP 1: Check if roll number already exists ---
                     const q = query(collection(db, "votedRollNumbers"), where("rollNumber", "==", rollNumber));
