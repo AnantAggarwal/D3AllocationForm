@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkbox Selection - Exactly 10 Required</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 700px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 25px;
+        }
+
+        p.instructions {
+            color: #777;
+            font-size: 1em;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .form-group input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+
+        .form-group input[type="text"]:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+        }
+
+        .error-message {
+            color: #d9534f;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .success-message {
+            color: #28a745;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            background-color: #e9e9e9;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .checkbox-item:hover {
+            background-color: #dcdcdc;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+            cursor: pointer;
+            position: relative;
+            background-color: #fff;
+        }
+
+        .checkbox-item input[type="checkbox"]:checked {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+
+        .checkbox-item input[type="checkbox"]:checked::after {
+            content: '\2713';
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 14px;
+        }
+
+        .checkbox-item label {
+            flex-grow: 1;
+            text-align: left;
+            color: #555;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        button[type="submit"]:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Student Information & Option Selection</h1>
+        <p class="instructions">Please fill in your roll number and select exactly 10 options to submit the form.</p>
+        <p id="errorMessage" class="error-message">Please ensure your roll number is entered and exactly 10 options are selected.</p>
+        <p id="successMessage" class="success-message">Form submitted successfully!</p>
+
+        <form id="checkboxForm">
+            <div class="form-group">
+                <label for="rollNumber">Roll Number:</label>
+                <input type="text" id="rollNumber" name="rollNumber" required placeholder="Enter your roll number">
+            </div>
+
+            <div class="checkbox-grid">
+                <script>
+                    let names = [
+                        "Rakesh",
+                        "Rahul",
+                        "Anant",
+                        "Himanshu",
+                        "Ching",
+                        "Jayraman",
+                        "Devansh",
+                        "PUC",
+                        "Batuk",
+                        "JhaatuRaj",
+                        "Sunand",
+                        "Arman",
+                        "Nideesh",
+                        "Nipun",
+                        "Priyanshu",
+                        "Raman",
+                        "Bhadwa",
+                        "Muthu",
+                        "Sthit",
+                        "Aritra",
+                        "Maksad",
+                        "Aradhya",
+                        "Mathur",
+                        "Nigger",
+                        "Ankit",
+                        "Arnav",
+                        "Shivam"
+                    ]
+                    for (let i = 0; i < 27; i++) {
+                        document.write(`
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="option${i}" name="${names[i]}" value="option${i}">
+                                <label for="option${i}">${names[i]}</label>
+                            </div>
+                        `);
+                    }
+                </script>
+            </div>
+            <button type="submit" id="submitButton" disabled>Submit</button>
+        </form>
+    </div>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getFirestore, collection, addDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        // Your web app's Firebase configuration
+        // PASTE YOUR FIREBASE CONFIGURATION HERE
+        const firebaseConfig = {
+            apiKey: "AIzaSyDkB2y4y0bAo7BiE4koWpamlRlf6Teaq_c",
+            authDomain: "d3allocationh5.firebaseapp.com",
+            projectId: "d3allocationh5",
+            storageBucket: "d3allocationh5.firebasestorage.app",
+            messagingSenderId: "860855415330",
+            appId: "1:860855415330:web:514e6f8d96253fbc8dd07b",
+            measurementId: "G-BKLXLV474Y"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('checkboxForm');
+            const checkboxes = form.querySelectorAll('input[type="checkbox"]');
+            const rollNumberInput = document.getElementById('rollNumber');
+            const submitButton = document.getElementById('submitButton');
+            const errorMessage = document.getElementById('errorMessage');
+            const successMessage = document.getElementById('successMessage');
+            const REQUIRED_SELECTIONS = 10;
+
+            function validateForm() {
+                let checkedCount = 0;
+                checkboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        checkedCount++;
+                    }
+                });
+
+                const isRollNumberFilled = rollNumberInput.value.trim() !== '';
+                const isTenCheckboxesSelected = (checkedCount === REQUIRED_SELECTIONS);
+
+                if (isRollNumberFilled && isTenCheckboxesSelected) {
+                    submitButton.disabled = false;
+                    errorMessage.style.display = 'none'; // Hide error if conditions are met
+                    return true;
+                } else {
+                    submitButton.disabled = true;
+                    return false;
+                }
+            }
+
+            // Function to reset the form
+            function resetForm() {
+                rollNumberInput.value = ''; // Clear roll number
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = false; // Uncheck all checkboxes
+                });
+                validateForm(); // Re-validate to disable button
+            }
+
+            // Add event listeners
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', validateForm);
+            });
+            rollNumberInput.addEventListener('input', validateForm);
+
+            // Add event listener for form submission
+            form.addEventListener('submit', async function(event) {
+                event.preventDefault(); // Prevent default form submission
+
+                errorMessage.style.display = 'none'; // Hide any previous error
+                successMessage.style.display = 'none'; // Hide any previous success
+
+                if (!validateForm()) {
+                    errorMessage.textContent = "Please ensure your roll number is entered and exactly 10 options are selected.";
+                    errorMessage.style.display = 'block'; // Show general validation error
+                    return;
+                }
+
+                const rollNumber = rollNumberInput.value.trim();
+
+                try {
+                    // --- STEP 1: Check if roll number already exists ---
+                    const q = query(collection(db, "votedRollNumbers"), where("rollNumber", "==", rollNumber));
+                    const querySnapshot = await getDocs(q);
+
+                    if (!querySnapshot.empty) {
+                        // Roll number already exists
+                        errorMessage.textContent = `Roll Number "${rollNumber}" has already submitted.`;
+                        errorMessage.style.display = 'block';
+                        return; // Stop submission
+                    }
+
+                    // --- STEP 2: Store Roll Number (if unique) ---
+                    await addDoc(collection(db, "votedRollNumbers"), {
+                        rollNumber: rollNumber,
+                        timestamp: new Date()
+                    });
+
+                    // --- STEP 3: Store User Responses (Selected Checkboxes) ---
+                    const selectedOptions = [];
+                    checkboxes.forEach(checkbox => {
+                        if (checkbox.checked) {
+                            selectedOptions.push(checkbox.value);
+                        }
+                    });
+
+                    await addDoc(collection(db, "userResponses"), {
+                        // We are NOT linking the roll number here, as per your "no mapping" request.
+                        // Just storing the selected options and a timestamp for the response.
+                        selectedOptions: selectedOptions,
+                        timestamp: new Date()
+                    });
+
+
+                    successMessage.textContent = `Roll Number ${rollNumber} recorded successfully! Responses stored separately.`;
+                    successMessage.style.display = 'block';
+                    resetForm(); // Reset the form after successful submission
+
+                } catch (e) {
+                    console.error("Error during submission: ", e);
+                    errorMessage.textContent = "An error occurred during submission. Please try again.";
+                    errorMessage.style.display = 'block';
+                }
+            });
+
+            // Initial validation on page load
+            validateForm();
+        });
+    </script>
+</body>
+</html>
